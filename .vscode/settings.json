@@ -1,0 +1,11 @@
+{
+  "python.pythonPath": "venv/bin/python",
+  "python.defaultInterpreterPath": "venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "notebook.lineNumbers": "on",
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.pytest_cache": true
+  }
+}
