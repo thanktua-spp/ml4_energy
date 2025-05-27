@@ -21,15 +21,8 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Verify Python version
-        run: python --version
-
-      - name: Create virtual environment with Python 3.10
-        run: |
-          python3.10 -m venv venv
-          source venv/bin/activate
-          pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Run project setup script
+        run: bash setup/setup.sh
 
       - name: Merge main into current branch
         run: |
@@ -42,6 +35,3 @@ jobs:
       - name: Push changes if merge occurred
         run: |
           git push origin HEAD || echo "No changes to push"
-
-      - name: Run project setup script (optional)
-        run: bash setup/setup.sh
