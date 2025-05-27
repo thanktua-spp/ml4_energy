@@ -4,25 +4,27 @@ on:
   push:
     branches: [main]
   schedule:
-    - cron: "0 * * * *" # Optional: hourly sync
+    - cron: "0 * * * *"
 
 jobs:
   sync-branch:
     runs-on: ubuntu-latest
-    if: github.ref != 'refs/heads/main'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+      - name: Build Docker container and run setup.sh
+        run: |
+          docker build -t my-python310-app .
+          docker run --rm my-python310-app bash -c "./setup/setup.sh"
 
-      - name: Run project setup script
-        run: bash setup/setup.sh
+      - name: Verify Python and pip versions inside container venv
+        run: |
+          docker run --rm my-python310-app bash -c "./venv/bin/python --version"
+          docker run --rm my-python310-app bash -c "./venv/bin/pip --version"
 
       - name: Merge main into current branch
         run: |

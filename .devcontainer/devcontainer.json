@@ -1,0 +1,14 @@
+{
+  "name": "Python 3.10 Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "settings": {
+    "python.pythonPath": "/usr/local/bin/python3.10"
+  },
+  "extensions": [
+    "ms-python.python"
+  ],
+  "postCreateCommand": "python3.10 -m venv venv && ./venv/bin/pip install --upgrade pip && ./venv/bin/pip install -r requirements.txt"
+}
