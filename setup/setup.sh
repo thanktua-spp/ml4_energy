@@ -2,16 +2,18 @@
 
 echo "🟢 Starting project setup..."
 
-# Check if Python is installed
-if ! command -v python3 &> /dev/null
-then
-    echo "❌ Python3 is not installed. Please install Python 3.10+ and rerun this script."
+# Required Python version
+REQUIRED_PYTHON="3.10"
+
+# Check if Python 3.10 is installed
+if ! command -v python3.10 &> /dev/null; then
+    echo "❌ Python $REQUIRED_PYTHON is not installed. Please install it before running this setup."
     exit 1
 fi
 
 # Create virtual environment
-echo "📦 Creating virtual environment in ./venv..."
-python3 -m venv venv
+echo "📦 Creating virtual environment in ./venv using Python $REQUIRED_PYTHON..."
+python3.10 -m venv venv
 
 # Activate virtual environment
 echo "✅ Activating virtual environment..."

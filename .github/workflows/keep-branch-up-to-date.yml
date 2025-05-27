@@ -1,11 +1,10 @@
-# .github/workflows/keep-branch-up-to-date.yml
 name: Keep Branch in Sync with Main
 
 on:
   push:
     branches: [main]
   schedule:
-    - cron: '0 * * * *'  # Optional: hourly sync
+    - cron: "0 * * * *" # Optional: hourly sync
 
 jobs:
   sync-branch:
@@ -17,15 +16,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python
+      - name: Set up Python 3.10
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
-      - name: Create and activate virtual environment
+      - name: Verify Python version
+        run: python --version
+
+      - name: Create virtual environment with Python 3.10
         run: |
-          python -m venv venv
+          python3.10 -m venv venv
           source venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Merge main into current branch
@@ -39,6 +42,6 @@ jobs:
       - name: Push changes if merge occurred
         run: |
           git push origin HEAD || echo "No changes to push"
-          
-      - name: Set up project
+
+      - name: Run project setup script (optional)
         run: bash setup/setup.sh
