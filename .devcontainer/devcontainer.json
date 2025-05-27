@@ -1,14 +1,18 @@
 {
-  "name": "Python 3.10 Dev Container",
+  "name": "ML4 Energy",
   "build": {
-    "dockerfile": "Dockerfile",
+    "dockerfile": "./Dockerfile",
     "context": ".."
   },
   "settings": {
-    "python.pythonPath": "/usr/local/bin/python3.10"
+    "terminal.integrated.defaultProfile.linux": "bash",
+    "python.pythonPath": "/app/venv/bin/python"
   },
+  "postCreateCommand": "bash setup/setup.sh",
+  "remoteUser": "root",
+  "workspaceFolder": "/app",
   "extensions": [
-    "ms-python.python"
-  ],
-  "postCreateCommand": "python3.10 -m venv venv && ./venv/bin/pip install --upgrade pip && ./venv/bin/pip install -r requirements.txt"
+    "ms-python.python",
+    "ms-toolsai.jupyter"
+  ]
 }
