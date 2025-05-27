@@ -1,28 +1,17 @@
+# Dockerfile
 FROM python:3.10-slim
 
+# Set working directory
 WORKDIR /app
 
-# Install git for your setup.sh script (optional)
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+# Copy all project files
+COPY . .
 
-COPY requirements.txt setup/setup.sh /app/
-
+# Ensure setup script is executable
 RUN chmod +x setup/setup.sh
 
-# Run your setup script to create venv and install packages
-RUN ./setup/setup.sh
+# Run the setup script to create virtual environment and install dependencies
+RUN bash setup/setup.sh
 
-COPY . /app
-
-# Use bash as default shell
-SHELL ["/bin/bash", "-c"]
-
-# Make container always activate venv on startup
-ENV VIRTUAL_ENV=/app/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# By default open a bash shell with venv activated
-CMD ["bash", "--rcfile", "/app/.bashrc"]
-
-# Ensure .bashrc activates venv
-RUN echo "source /app/venv/bin/activate" >> /app/.bashrc
+# Activate the venv on container startup
+CMD ["bash", "-c", "source venv/bin/activate && exec bash"]
